@@ -15,11 +15,6 @@ namespace PElementApi.Controllers
     [Route("[controller]")]
     public class PElementController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         private readonly ILogger<PElementController> _logger;
 
         public PElementController(ILogger<PElementController> logger)
@@ -30,7 +25,7 @@ namespace PElementApi.Controllers
         [HttpGet]
         public async Task<PElement> Get(string name)
         {
-            TSocketTransport transport = new TSocketTransport("127.0.0.1", 5550, new TConfiguration());
+            TSocketTransport transport = new TSocketTransport("server", 5550, new TConfiguration());
             TProtocol proto = new TBinaryProtocol(transport);
             PElementService.Client client = new PElementService.Client(proto);
 
@@ -46,7 +41,7 @@ namespace PElementApi.Controllers
         [HttpGet("All")]
         public async Task<IEnumerable<PElement>> GetAll()
         {
-            TSocketTransport transport = new TSocketTransport("127.0.0.1", 5550, new TConfiguration());
+            TSocketTransport transport = new TSocketTransport("server", 5550, new TConfiguration());
             TProtocol proto = new TBinaryProtocol(transport);
             PElementService.Client client = new PElementService.Client(proto);
 
