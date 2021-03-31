@@ -1,0 +1,27 @@
+version: '3.4'
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile-server
+    ports:
+      - '5550:5550'
+    expose:  
+      - 5550
+    networks:
+      - net
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile-client
+    ports:
+      - '80:80'
+    expose:  
+      - 80
+    networks:
+      - net
+    depends_on:
+      - server
+networks:
+  net:
+    driver: bridge
